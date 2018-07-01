@@ -12,6 +12,14 @@ class CreditCard
     check_validity(totalled)
   end
 
+  def validation_output
+    if valid_number?
+      "The number #{@number} is valid"
+    else
+      "The number #{@number} is invalid"
+    end
+  end
+
   def split(string)
     string.chars.map do |number|
       number.to_i

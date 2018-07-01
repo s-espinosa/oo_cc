@@ -22,6 +22,36 @@ class CreditCardTest < Minitest::Test
     refute cc.valid_number?
   end
 
+  def test_it_can_see_if_an_amex_is_valid
+    cc = CreditCard.new("342804633855673")
+
+    assert cc.valid_number?
+  end
+
+  def test_it_can_see_if_an_amex_is_not_valid
+    cc = CreditCard.new("342801633855673")
+
+    refute cc.valid_number?
+  end
+
+  def test_it_can_provide_string_output_for_valid_numbers
+    cc = CreditCard.new("5541808923795240")
+
+    expected = "The number 5541808923795240 is valid"
+    actual   = cc.validation_output
+
+    assert_equal expected, actual
+  end
+
+  def test_it_can_provide_string_output_for_invalid_numbers
+    cc = CreditCard.new("5541801923795240")
+
+    expected = "The number 5541801923795240 is invalid"
+    actual   = cc.validation_output
+
+    assert_equal expected, actual
+  end
+
   def test_it_can_split_a_string_of_numbers
     cc = CreditCard.new("345")
 
@@ -72,6 +102,15 @@ class CreditCardTest < Minitest::Test
 
     expected = true
     actual   = cc.check_validity(20)
+
+    assert_equal expected, actual
+  end
+
+  def test_it_can_check_to_see_that_a_number_is_not_divisible_by_10
+    cc = CreditCard.new("345")
+
+    expected = false
+    actual   = cc.check_validity(21)
 
     assert_equal expected, actual
   end
